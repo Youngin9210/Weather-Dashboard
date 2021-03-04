@@ -1,0 +1,13 @@
+#currentConditions h3 {
+  padding: 1%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+#currentList li,
+.forecastList li {
+  padding: 1%;
+}

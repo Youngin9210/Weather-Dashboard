@@ -38,8 +38,8 @@
       <h1 class="text-dark">Weather Dashboard</h1>
     </header>
 
-    <main class="container-fluid" id="search-container">
-      <div class="card" style="width: 18rem">
+    <main class="container-fluid d-flex" id="search-container">
+      <div class="card w-20" style="width: 18rem">
         <div class="card-header">
           <label for="input">Search for a City:</label>
           <div class="input-group mb-3">
@@ -59,16 +59,73 @@
             </button>
           </div>
         </div>
-        <ul class="cities list-group list-group-flush">
-          <!-- <li class="list-group-item">An item</li>
-        <li class="list-group-item">A second item</li>
-        <li class="list-group-item">A third item</li> -->
-        </ul>
+        <div>
+          <ul class="cities list-group list-group-flush"></ul>
+        </div>
       </div>
 
-      <div class="container-fluid" id="weather-container">
-        <div class="" id="current-weather"></div>
-        <div id="forecast"></div>
+      <div class="container m-3 hidden" id="weather-container">
+        <div class="card m-3" id="currentConditions">
+          <h3 class="" id="currentCity">
+            Greenville
+            <span id="currentDate">(8/15/2021)</span>
+            <i class="fas fa-sun" id="currentIcon"></i>
+          </h3>
+          <ul id="currentList">
+            <li>Temperature: <span id="currenTemp"></span>&#176;F</li>
+            <li>Humidity: <span id="currrentHumidity"></span>&#37;</li>
+            <li>Wind Speed: <span id="currentWind"></span>MPH</li>
+            <li>UV Index: <span id="currentUVI"></span></li>
+          </ul>
+        </div>
+
+        <!-- ***** Format to follow when creating forecast in scripts.js ***** -->
+
+        <!-- <div class="container w-100 hidden" id="forecast">
+          <h4>5-Day Forecast</h4>
+          <div class="d-flex flex-row justify-content-between">
+            <div class="card bg-primary text-white p-3 col-2">
+              <ul class="forecastList">
+                <li><h5>8/15/2021</h5></li>
+                <li><i class="fas fa-sun"></i></li>
+                <li>Temp: <span>70</span>&#176;F</li>
+                <li>Humidity: <span>20</span>&#37;</li>
+              </ul>
+            </div>
+            <div class="card bg-primary text-white p-3 col-2">
+              <ul class="forecastList">
+                <li><h5>8/15/2021</h5></li>
+                <li><i class="fas fa-sun"></i></li>
+                <li>Temp: <span>70</span>&#176;F</li>
+                <li>Humidity: <span>20</span>&#37;</li>
+              </ul>
+            </div>
+            <div class="card bg-primary text-white p-3 col-2">
+              <ul class="forecastList">
+                <li><h5>8/15/2021</h5></li>
+                <li><i class="fas fa-sun"></i></li>
+                <li>Temp: <span>70</span>&#176;F</li>
+                <li>Humidity: <span>20</span>&#37;</li>
+              </ul>
+            </div>
+            <div class="card bg-primary text-white p-3 col-2">
+              <ul class="forecastList">
+                <li><h5>8/15/2021</h5></li>
+                <li><i class="fas fa-sun"></i></li>
+                <li>Temp: <span>70</span>&#176;F</li>
+                <li>Humidity: <span>20</span>&#37;</li>
+              </ul>
+            </div>
+            <div class="card bg-primary text-white p-3 col-2">
+              <ul class="forecastList">
+                <li><h5>8/15/2021</h5></li>
+                <li><i class="fas fa-sun"></i></li>
+                <li>Temp: <span>70</span>&#176;F</li>
+                <li>Humidity: <span>20</span>&#37;</li>
+              </ul>
+            </div>
+          </div> 
+        </div> -->
       </div>
     </main>
 
