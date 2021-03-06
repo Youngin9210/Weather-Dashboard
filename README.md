@@ -18,7 +18,7 @@ Check it out here https://youngin9210.github.io/Weather-Dashboard/
 
 ## Screenshots
 
-![gif](assets/images/)
+![gif](assets/images/screenshot.png)
 
 ## Installation
 
