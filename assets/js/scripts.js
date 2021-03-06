@@ -42,6 +42,8 @@ function searchEvent() {
 // putting functions, methods, and variables to be used within searchEvent into one function
 function inputFunc() {
   event.preventDefault();
+  citiesList.removeClass("hidden");
+  weatherContainer.removeClass("hidden");
   cities.push(search.val());
   // setStorage();
   // createCityList();
@@ -50,18 +52,20 @@ function inputFunc() {
   search.val("");
 }
 
-// function createCityList(city) {
-//   console.log(cities);
-//   citiesList.append(cityLiEl);
-//   cityLiEl.append(cityBtn);
-//   cityBtn.text(city);
-// }
+function createCityList(city) {
+  console.log(cities);
+  for (let i = 0; i < cities.length; i++) {
+    citiesList.append(cityLiEl);
+    cityLiEl.append(cityBtn);
+    cityBtn.text(city);
+  }
+}
 
 // ********** localStorage **********
 
 function setStorage() {
   // setting array cities into localStorage above to be a stringified value
-  localStorage.setItem("city", JSON.stringify(cities));
+  localStorage.setItem("cities", JSON.stringify(cities));
 }
 
 // creating a function to get tasks from localStorage and place them in the corresponding textarea
@@ -74,10 +78,6 @@ function getCities() {
     // createCityList(value);
   });
   // console.log(cities);
-
-  // for (let i = 1; i < cities.length; i++) {
-  //   createCityList(cities()[i--]);
-  // }
 }
 
 // ********** API **********
@@ -99,10 +99,8 @@ function getUvi(lat, lon) {
   let uviUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
 
   fetch(uviUrl).then(function (response) {
-    // console.log(response);
     response.json().then(function (data) {
       createCurrentUvi(data);
-      // console.log(data);
     });
   });
 }
@@ -113,7 +111,6 @@ function getForecast(lat, lon) {
   console.log(forecastUrl);
 
   fetch(forecastUrl).then(function (response) {
-    // console.log(response);
     response.json().then(function (data) {
       createForecast(data);
     });
@@ -167,9 +164,9 @@ function createCurrentUvi(uvi) {
 }
 
 function createForecast(forecast) {
-  // console.log(moment(forecast.daily[0].dt * 1000).format("M/D/YYYY"));
-
-  let forecastContainer = $("<div>").addClass("container w-100");
+  let forecastContainer = $("<div>").addClass(
+    "container d-flex flex-column w-100"
+  );
   weatherContainer.append(forecastContainer);
 
   let fiveDayH4 = $("<h4>").text("5-Day Forecast");
@@ -183,10 +180,9 @@ function createForecast(forecast) {
   for (let i = 1; i < 6; i++) {
     let fiveDay = forecast.daily[i];
     let forcastedDay = moment(fiveDay.dt * 1000).format("M/D/YYYY");
-    // console.log(forcastedDay);
 
     let dayWeather = $("<div>").addClass(
-      "card bg-primary text-white p-3 col-2"
+      "card d-flex bg-primary text-white p-3 col-2"
     );
     fiveDayForecast.append(dayWeather);
 
@@ -199,13 +195,17 @@ function createForecast(forecast) {
     let weatherIcon = $("<img>").addClass("").attr("src", forecastIconUrl);
     dayWeather.append(weatherIcon);
 
-    let maxTemp = $("<span>").addClass("");
+    let maxTemp = $("<span>").addClass("text-start");
     maxTemp.text(`Max Temp: ${fiveDay.temp.max}°F`);
     dayWeather.append(maxTemp);
 
-    let minTemp = $("<span>").addClass("");
+    let minTemp = $("<span>").addClass("text-start");
     minTemp.text(`Min Temp: ${fiveDay.temp.min}°F`);
     dayWeather.append(minTemp);
+
+    let dayHumidity = $("<span>").addClass("text-start");
+    dayHumidity.text(`Humidity: ${fiveDay.humidity}%`);
+    dayWeather.append(dayHumidity);
   }
 }
 
