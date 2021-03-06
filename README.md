@@ -4,7 +4,7 @@ OSU Bootcamp HW 6
 
 ## Description
 
-This webpage utilizes jQuery along with Moment.js and Bootstrap to create a weather dashboard. When searching for a city, the current weather conditions are display along with the 5-day forecast for that city by accessing data from the Openweathermap api.
+This webpage utilizes jQuery along with Moment.js and Bootstrap to create a weather dashboard. When searching for a city, the current weather conditions are display along with the 5-day forecast for that city by fetching data from the Openweathermap api.
 
 Check it out here https://youngin9210.github.io/Weather-Dashboard/
 
