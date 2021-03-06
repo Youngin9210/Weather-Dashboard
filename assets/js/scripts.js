@@ -106,6 +106,20 @@ function getUvi(lat, lon) {
     });
   });
 }
+
+function getForecast(lat, lon) {
+  let apiKey = "6d2d2840d31a11364a7bbe1cba528b23";
+  let forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,current,alerts&units=imperial&appid=${apiKey}`;
+  console.log(forecastUrl);
+
+  fetch(forecastUrl).then(function (response) {
+    // console.log(response);
+    response.json().then(function (data) {
+      createForecast(data);
+    });
+  });
+}
+
 // ********** Current Weather Conditions **********
 
 function createCurrentConditions(conditions, city) {
@@ -118,8 +132,8 @@ function createCurrentConditions(conditions, city) {
   currentCity.append(currentDate);
 
   let currentIcon = $("<img>");
-  let iconCode = conditions.list[0].weather[0].icon;
-  let iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  let icon = conditions.list[0].weather[0].icon;
+  let iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`;
   currentIcon.attr("src", iconUrl);
   currentCity.append(currentIcon);
 
@@ -135,6 +149,7 @@ function createCurrentConditions(conditions, city) {
   let lat = conditions.city.coord.lat;
   let lon = conditions.city.coord.lon;
   getUvi(lat, lon);
+  getForecast(lat, lon);
 }
 
 function createCurrentUvi(uvi) {
@@ -151,8 +166,47 @@ function createCurrentUvi(uvi) {
   }
 }
 
-function createForecast(cityForecast) {
-  let forecast = $("<div>").addClass("container w-100");
+function createForecast(forecast) {
+  // console.log(moment(forecast.daily[0].dt * 1000).format("M/D/YYYY"));
+
+  let forecastContainer = $("<div>").addClass("container w-100");
+  weatherContainer.append(forecastContainer);
+
+  let fiveDayH4 = $("<h4>").text("5-Day Forecast");
+  forecastContainer.append(fiveDayH4);
+
+  let fiveDayForecast = $("<div>").addClass(
+    "d-flex flex-row justify-content-between"
+  );
+  forecastContainer.append(fiveDayForecast);
+
+  for (let i = 1; i < 6; i++) {
+    let fiveDay = forecast.daily[i];
+    let forcastedDay = moment(fiveDay.dt * 1000).format("M/D/YYYY");
+    // console.log(forcastedDay);
+
+    let dayWeather = $("<div>").addClass(
+      "card bg-primary text-white p-3 col-2"
+    );
+    fiveDayForecast.append(dayWeather);
+
+    let weatherDate = $("<h5>").addClass(" text-center");
+    weatherDate.text(forcastedDay);
+    dayWeather.append(weatherDate);
+
+    let forecastIcon = fiveDay.weather[0].icon;
+    let forecastIconUrl = `http://openweathermap.org/img/wn/${forecastIcon}@2x.png`;
+    let weatherIcon = $("<img>").addClass("").attr("src", forecastIconUrl);
+    dayWeather.append(weatherIcon);
+
+    let maxTemp = $("<span>").addClass("");
+    maxTemp.text(`Max Temp: ${fiveDay.temp.max}°F`);
+    dayWeather.append(maxTemp);
+
+    let minTemp = $("<span>").addClass("");
+    minTemp.text(`Min Temp: ${fiveDay.temp.min}°F`);
+    dayWeather.append(minTemp);
+  }
 }
 
 searchEvent();

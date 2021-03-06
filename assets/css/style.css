@@ -1,5 +1,6 @@
 #currentConditions h3 {
   padding: 1%;
+  text-transform: capitalize;
 }
 
 ul {
