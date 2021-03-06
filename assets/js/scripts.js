@@ -1,43 +1,35 @@
 let search = $(".search");
 
 let searchBtn = $(".searchBtn");
+let cityBtn;
 let citiesList = $(".cities");
-let cityLiEl = $("<li>").addClass("list-group-item");
-let cityBtn = $("<button>").addClass(
-  "cityBtn btn btn-outline-secondary d-flex w-100"
-);
 let weatherContainer = $("#weather-container");
 let cities = [];
 
+let forecastContainer = $("#forecastContainer");
+let fiveDayForecast = $("#forecast");
+
 // ********** Search Functions **********
 
-// function to be called on later to implement a click event on searchBtn
-function searchEvent() {
-  // adding a click event to searchBtn
-  searchBtn.click(function (event) {
+searchBtn.click(function (event) {
+  if (search.val() !== "") {
+    inputFunc();
+  } else {
+    alert("please enter a city");
+  }
+});
+
+// adding a keypress event on the search input for the 'enter' key
+$(search).keypress(function (event) {
+  let keyCode = event.keyCode;
+  if (keyCode === 13) {
     if (search.val() !== "") {
       inputFunc();
     } else {
-      console.log("please enter a city");
+      alert("please enter a city");
     }
-  });
-
-  // adding a keypress event on the search input
-  $(search).keypress(function (event) {
-    let keyCode = event.keyCode;
-    if (keyCode === 13) {
-      if (search.val() !== "") {
-        inputFunc();
-      } else {
-        console.log("please enter a city");
-      }
-    }
-  });
-
-  cityBtn.click(function (event) {
-    getWeather($(cityBtn).text());
-  });
-}
+  }
+});
 
 // putting functions, methods, and variables to be used within searchEvent into one function
 function inputFunc() {
@@ -45,20 +37,24 @@ function inputFunc() {
   citiesList.removeClass("hidden");
   weatherContainer.removeClass("hidden");
   cities.push(search.val());
-  // setStorage();
-  // createCityList();
+  setStorage();
+  createCityList(search.val());
   getWeather(search.val());
-  // console.log(cities);
   search.val("");
 }
 
-function createCityList(city) {
-  console.log(cities);
-  for (let i = 0; i < cities.length; i++) {
-    citiesList.append(cityLiEl);
-    cityLiEl.append(cityBtn);
-    cityBtn.text(city);
-  }
+function createCityList(lastCity) {
+  // console.log(cities);
+  cityBtn = $("<button>").addClass(
+    "cityBtn btn btn-outline-secondary d-flex w-100"
+  );
+  cityBtn.text(lastCity);
+  cityBtn.attr("data-city", lastCity);
+  citiesList.prepend(cityBtn);
+
+  cityBtn.click(function (event) {
+    getWeather(event.target.getAttribute("data-city"));
+  });
 }
 
 // ********** localStorage **********
@@ -66,18 +62,6 @@ function createCityList(city) {
 function setStorage() {
   // setting array cities into localStorage above to be a stringified value
   localStorage.setItem("cities", JSON.stringify(cities));
-}
-
-// creating a function to get tasks from localStorage and place them in the corresponding textarea
-function getCities() {
-  // cities = JSON.parse(localStorage.getItem("city"));
-  // looping through localStorage
-  $.each(localStorage, function (key, value) {
-    // looping through hours array
-    console.log(key, value);
-    // createCityList(value);
-  });
-  // console.log(cities);
 }
 
 // ********** API **********
@@ -164,49 +148,36 @@ function createCurrentUvi(uvi) {
 }
 
 function createForecast(forecast) {
-  let forecastContainer = $("<div>").addClass(
-    "container d-flex flex-column w-100"
-  );
-  weatherContainer.append(forecastContainer);
-
-  let fiveDayH4 = $("<h4>").text("5-Day Forecast");
-  forecastContainer.append(fiveDayH4);
-
-  let fiveDayForecast = $("<div>").addClass(
-    "d-flex flex-row justify-content-between"
-  );
-  forecastContainer.append(fiveDayForecast);
-
+  fiveDayForecast.text("");
+  let dailyForecast = forecast.daily;
   for (let i = 1; i < 6; i++) {
-    let fiveDay = forecast.daily[i];
-    let forcastedDay = moment(fiveDay.dt * 1000).format("M/D/YYYY");
+    let nextDay = dailyForecast[i];
+    let forcastedDay = moment(nextDay.dt * 1000).format("M/D/YYYY");
 
     let dayWeather = $("<div>").addClass(
-      "card d-flex bg-primary text-white p-3 col-2"
+      "card d-flex bg-primary text-white p-3 col-8 col-xl-2 col-md-4 col-sm-4 m-3"
     );
     fiveDayForecast.append(dayWeather);
 
-    let weatherDate = $("<h5>").addClass(" text-center");
+    let weatherDate = $("<h5>").addClass("d-flex justify-content-center");
     weatherDate.text(forcastedDay);
     dayWeather.append(weatherDate);
 
-    let forecastIcon = fiveDay.weather[0].icon;
+    let forecastIcon = nextDay.weather[0].icon;
     let forecastIconUrl = `http://openweathermap.org/img/wn/${forecastIcon}@2x.png`;
-    let weatherIcon = $("<img>").addClass("").attr("src", forecastIconUrl);
+    let weatherIcon = $("<img>").attr("src", forecastIconUrl);
     dayWeather.append(weatherIcon);
 
     let maxTemp = $("<span>").addClass("text-start");
-    maxTemp.text(`Max Temp: ${fiveDay.temp.max}°F`);
+    maxTemp.text(`Max: ${nextDay.temp.max}°F`);
     dayWeather.append(maxTemp);
 
     let minTemp = $("<span>").addClass("text-start");
-    minTemp.text(`Min Temp: ${fiveDay.temp.min}°F`);
+    minTemp.text(`Min: ${nextDay.temp.min}°F`);
     dayWeather.append(minTemp);
 
     let dayHumidity = $("<span>").addClass("text-start");
-    dayHumidity.text(`Humidity: ${fiveDay.humidity}%`);
+    dayHumidity.text(`Humidity: ${nextDay.humidity}%`);
     dayWeather.append(dayHumidity);
   }
 }
-
-searchEvent();

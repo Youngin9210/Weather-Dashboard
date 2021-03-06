@@ -35,93 +35,49 @@
     <header
       class="p-2 bg-secondary d-flex align-items-center justify-content-center"
     >
-      <h1 class="text-dark">Weather Dashboard</h1>
+      <h1 class="text-white">Weather Dashboard</h1>
     </header>
 
-    <main class="container-fluid d-flex" id="search-container">
-      <div class="card w-20" style="width: 18rem">
-        <div class="card-header">
-          <label for="input">Search for a City:</label>
-          <div class="input-group mb-3">
-            <input
-              type="text"
-              class="form-control search"
-              placeholder="Enter a city..."
-              aria-label="Search"
-              aria-describedby="button-addon2"
-            />
-            <button
-              class="btn btn-outline-secondary bg-primary searchBtn"
-              type="button"
-              id="button-addon2"
-            >
-              <i class="fas fa-search text-light"></i>
-            </button>
-          </div>
+    <main class="container-fluid" id="search-container">
+      <div class="row">
+        <div class="col-12 col-md-3 p-2"" style="width: 18rem">
+        <label for="input">Search for a City:</label>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control search"
+            placeholder="Enter a city..."
+            aria-label="Search"
+            aria-describedby="button-addon2"
+          />
+          <button
+            class="btn btn-outline-secondary bg-primary searchBtn"
+            type="button"
+            id="button-addon2"
+          >
+            <i class="fas fa-search text-light"></i>
+          </button>
         </div>
-        <div>
-          <ul class="cities list-group list-group-flush"></ul>
-        </div>
+        <div class="cities d-flex list-group list-group-flush hidden"></div>
       </div>
 
-      <div class="container m-3 hidden" id="weather-container">
-        <div class="card m-3" id="currentConditions">
+      <div class="col-12 col-md-9 hidden" id="weather-container">
+        <div class="m-3" id="currentConditions">
           <h3 class="" id="currentCity"></h3>
           <ul id="currentList">
-            <li>Temperature: <span id="currenTemp"></span>&#176;F</li>
-            <li>Humidity: <span id="currrentHumidity"></span>&#37;</li>
-            <li>Wind Speed: <span id="currentWind"></span>MPH</li>
+            <li>Temperature: <span id="currentTemp"></span>&#176;F</li>
+            <li>Humidity: <span id="currentHumidity"></span>&#37;</li>
+            <li>Wind Speed: <span id="currentWind"></span>mph</li>
             <li>UV Index: <span id="currentUVI"></span></li>
           </ul>
         </div>
-
-        <!-- ***** Format to follow when creating forecast in scripts.js ***** -->
-
-        <!-- <div class="container w-100 hidden" id="forecast">
+        <div class="d-flex flex-column m-3" id="forecastContainer">
           <h4>5-Day Forecast</h4>
-          <div class="d-flex flex-row justify-content-between">
-            <div class="card bg-primary text-white p-3 col-2">
-              <ul class="forecastList">
-                <li><h5>8/15/2021</h5></li>
-                <li><i class="fas fa-sun"></i></li>
-                <li>Temp: <span>70</span>&#176;F</li>
-                <li>Humidity: <span>20</span>&#37;</li>
-              </ul>
-            </div>
-            <div class="card bg-primary text-white p-3 col-2">
-              <ul class="forecastList">
-                <li><h5>8/15/2021</h5></li>
-                <li><i class="fas fa-sun"></i></li>
-                <li>Temp: <span>70</span>&#176;F</li>
-                <li>Humidity: <span>20</span>&#37;</li>
-              </ul>
-            </div>
-            <div class="card bg-primary text-white p-3 col-2">
-              <ul class="forecastList">
-                <li><h5>8/15/2021</h5></li>
-                <li><i class="fas fa-sun"></i></li>
-                <li>Temp: <span>70</span>&#176;F</li>
-                <li>Humidity: <span>20</span>&#37;</li>
-              </ul>
-            </div>
-            <div class="card bg-primary text-white p-3 col-2">
-              <ul class="forecastList">
-                <li><h5>8/15/2021</h5></li>
-                <li><i class="fas fa-sun"></i></li>
-                <li>Temp: <span>70</span>&#176;F</li>
-                <li>Humidity: <span>20</span>&#37;</li>
-              </ul>
-            </div>
-            <div class="card bg-primary text-white p-3 col-2">
-              <ul class="forecastList">
-                <li><h5>8/15/2021</h5></li>
-                <li><i class="fas fa-sun"></i></li>
-                <li>Temp: <span>70</span>&#176;F</li>
-                <li>Humidity: <span>20</span>&#37;</li>
-              </ul>
-            </div>
-          </div> 
-        </div> -->
+          <div
+            class="d-flex flex-wrap justify-content-between"
+            id="forecast"
+          ></div>
+        </div>
       </div>
     </main>
 
@@ -131,11 +87,15 @@
       integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
       crossorigin="anonymous"
     ></script>
+
+    <!-- MomentJS -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
       integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
       crossorigin="anonymous"
     ></script>
+
+    <!-- scripts.js -->
     <script src="assets/js/scripts.js"></script>
   </body>
 </html>
