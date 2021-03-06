@@ -36,7 +36,7 @@ $(search).keypress(function (event) {
   }
 });
 
-// putting functions, methods, and variables to be used within searchEvent into one function
+// putting functions, methods, and variables to be used within search events into one function
 function inputFunc() {
   // preventing default actions of event
   event.preventDefault();
